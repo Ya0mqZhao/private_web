@@ -1,1 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, 'Poppins', 'Roboto', 'Helvetica Neue', sans-serif;
+      background: #ffffff;
+      min-height: 100vh;
+      width: 100%;
+    }
+    .auth-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .auth-card {
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      background: white;
+      padding: 2.5rem 1.8rem;
+      border-radius: 48px;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0,0,0,0.02);
+      border: 1px solid #ffe2e2;
+    }
+
+    .auth-card h2 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #e48989, #c75c6b);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .auth-sub {
+      color: #c48787;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .input-group input {
+      width: 80%;
+      padding: 0.9rem 1.2rem;
+      font-size: 1rem;
+      border: 1.5px solid #ffcfcf;
+      border-radius: 60px;
+      background: #fffafc;
+      outline: none;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .input-group input:focus {
+      border-color: #f29b9b;
+      box-shadow: 0 0 0 3px rgba(242, 155, 155, 0.2);
+    }
+
+    .auth-btn {
+      background: #f2afaf;
+      border: none;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      min-width: 150px;
+    }
+
+    .auth-btn:hover {
+      background: #e59595;
+      transform: scale(0.97);
+    }
+    .error-message {
+      color: #dc7a7a;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      min-height: 2rem;
+      font-weight: 500;
+    }
+    .wrong-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .wrong-content {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 48px;
+    }
+
+    .wrong-content h1 {
+      font-size: 3rem;
+      color: #d47a7a;
+      margin-bottom: 1rem;
+    }
+
+    .wrong-content p {
+      font-size: 1.3rem;
+      color: #a06767;
+    }
+
+    .wrong-content small {
+      display: block;
+      margin-top: 2rem;
+      color: #c99191;
+    }
+
+    .reset-button {
+      margin-top: 1.8rem;
+      background: none;
+      border: 1px solid #f0b6b6;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      color: #c47272;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .reset-button:hover {
+      background: #ffe8e8;
+    }
+    .love-screen {
+      min-height: 100vh;
+      width: 100%;
+      position: relative;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .bg-heart {
+      position: absolute;
+    }
+
+    .heart-left {
+      bottom: 8%;
+      left: -3%;
+      width: 220px;
+      height: 220px;
+      opacity: 0.6;
+      transform: rotate(-8deg);
+    }
+
+    .heart-right {
+      top: 5%;
+      right: -5%;
+      width: 260px;
+      height: 260px;
+      opacity: 0.55;
+      transform: rotate(12deg);
+    }
+
+    .bg-heart svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .love-message {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      background: transparent;
+      padding: 2rem 2.5rem;
+      border-radius: 64px;
+      max-width: 90vw;
+    }
+
+    .love-message h1 {
+      font-size: clamp(2.8rem, 12vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      background: linear-gradient(135deg, #e08989, #c75c5c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 2px 2px 12px rgba(199, 92, 92, 0.12);
+      white-space: nowrap;
+    }
+
+    .subtle-charm {
+      margin-top: 0.8rem;
+      font-size: 1.1rem;
+      color: #d48d8d;
+      letter-spacing: 1px;
+      font-weight: 400;
+      opacity: 0.7;
+      font-style: italic;
+    }
+
+    @media (max-width: 520px) {
+      .love-message h1 {
+        white-space: normal;
+        line-height: 1.2;
+      }
+      .heart-left {
+        width: 160px;
+        height: 160px;
+        bottom: 3%;
+        left: -8%;
+      }
+      .heart-right {
+        width: 190px;
+        height: 190px;
+        top: 2%;
+        right: -10%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .heart-left {
+        width: 130px;
+        height: 130px;
+      }
+      .heart-right {
+        width: 150px;
+        height: 150px;
+      }
+    }
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <h2>✧ ˚₊‧⁺˖ ♡</h2>
+      <div class="auth-sub">who are you?</div>
+      <div class="input-group">
+        <input type="text" id="nameInput" placeholder="type here..." autocomplete="off" autofocus>
+      </div>
+      <button class="auth-btn" id="submitBtn">enter ⟶</button>
+      <div id="authError" class="error-message"></div>
+    </div>
+  </div>
+  <div id="wrongScreen" class="wrong-screen hidden">
+    <div class="wrong-content">
+      <p>you're at the wrong place :( sorry</p>
+      <button id="tryAgainBtn" class="reset-button">go back</button>
+    </div>
+  </div>
+  <div id="loveScreen" class="love-screen hidden">
+    <div class="bg-hearts">
+      <div class="bg-heart heart-left">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pastelRedLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFB7B2" />
+              <stop offset="70%" stop-color="#FF9A9A" />
+              <stop offset="100%" stop-color="#F48B8B" />
+            </linearGradient>
+          </defs>
+          <path d="M50,88.5 C50,88.5 12.5,58.2 12.5,35.8 C12.5,22.5 23,12 36.3,12 C46.2,12 50,18.5 50,18.5 C50,18.5 53.8,12 63.7,12 C77,12 87.5,22.5 87.5,35.8 C87.5,58.2 50,88.5 50,88.5 Z" 
+                fill="url(#pastelRedLeft)" stroke="#FFB2B2" stroke-width="0.8" stroke-opacity="0.4"/>
+          </path>
+        </svg>
+      </div>
+      <div class="bg-heart heart-right">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pastelRedRight" x1="20%" y1="10%" x2="80%" y2="85%">
+              <stop offset="0%" stop-color="#FFB0B5" />
+              <stop offset="55%" stop-color="#FF9FAB" />
+              <stop offset="100%" stop-color="#F18A98" />
+            </linearGradient>
+          </defs>
+          <path d="M50,88.5 C50,88.5 12.5,58.2 12.5,35.8 C12.5,22.5 23,12 36.3,12 C46.2,12 50,18.5 50,18.5 C50,18.5 53.8,12 63.7,12 C77,12 87.5,22.5 87.5,35.8 C87.5,58.2 50,88.5 50,88.5 Z" 
+                fill="url(#pastelRedRight)" stroke="#FCA5A5" stroke-width="0.6" stroke-opacity="0.5"/>
+          </path>
+        </svg>
+      </div>
+    </div>
+    <div class="love-message">
+      <h1>I love you &lt;3</h1>
+    </div>
+  </div>
+
+  <script>
+
+    const authScreen = document.getElementById('authScreen');
+    const wrongScreen = document.getElementById('wrongScreen');
+    const loveScreen = document.getElementById('loveScreen');
+    const nameInput = document.getElementById('nameInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const authError = document.getElementById('authError');
+    const tryAgainBtn = document.getElementById('tryAgainBtn');
+
+    function showAuthScreen() {
+      authScreen.classList.remove('hidden');
+      wrongScreen.classList.add('hidden');
+      loveScreen.classList.add('hidden');
+      authError.innerHTML = '';
+      if (nameInput) {
+        nameInput.value = '';
+        nameInput.focus();
+      }
+    }
+    function showWrongScreen() {
+      authScreen.classList.add('hidden');
+      wrongScreen.classList.remove('hidden');
+      loveScreen.classList.add('hidden');
+    }
+    function showLoveScreen() {
+      authScreen.classList.add('hidden');
+      wrongScreen.classList.add('hidden');
+      loveScreen.classList.remove('hidden');
+    }
+    function checkName() {
+      const name = nameInput.value.trim();
+      
+      if (name === "") {
+        authError.innerHTML = "please tell me your name 💌";
+        return;
+      }
+      
+      if (name.toLowerCase() === "calvin") {
+        showLoveScreen();
+      } else {
+        showWrongScreen();
+      }
+    }
+
+    // Event listeners
+    if (submitBtn) {
+      submitBtn.addEventListener('click', checkName);
+    }
+    
+    if (nameInput) {
+      nameInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          checkName();
+        }
+      });
+    }
+    
+    if (tryAgainBtn) {
+      tryAgainBtn.addEventListener('click', function() {
+        showAuthScreen();
+      });
+    }
+
+    showAuthScreen();
+  </script>
+</body>
+</html>
