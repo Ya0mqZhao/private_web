@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>page</title>
+  <title>Page</title>
   <style>
     * {
       margin: 0;
@@ -91,6 +91,7 @@
       background: #e59595;
       transform: scale(0.97);
     }
+
     .error-message {
       color: #dc7a7a;
       font-size: 0.85rem;
@@ -134,8 +135,15 @@
       color: #c99191;
     }
 
-    .reset-button {
+    .button-group {
       margin-top: 1.8rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .reset-button {
       background: none;
       border: 1px solid #f0b6b6;
       padding: 0.5rem 1.2rem;
@@ -143,10 +151,29 @@
       color: #c47272;
       cursor: pointer;
       font-size: 0.9rem;
+      transition: 0.2s;
     }
 
     .reset-button:hover {
       background: #ffe8e8;
+    }
+
+    .gallery-button {
+      background: #f2afaf;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .gallery-button:hover {
+      background: #e59595;
+      transform: scale(0.97);
     }
     .love-screen {
       min-height: 100vh;
@@ -156,6 +183,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
     }
 
     .bg-hearts {
@@ -229,6 +257,24 @@
       font-style: italic;
     }
 
+    .love-gallery-btn {
+      margin-top: 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .love-gallery-btn .gallery-button {
+      background: #e08989;
+      font-size: 1rem;
+      padding: 0.7rem 1.8rem;
+      box-shadow: 0 2px 8px rgba(199, 92, 92, 0.2);
+    }
+
+    .love-gallery-btn .gallery-button:hover {
+      background: #c75c5c;
+      transform: scale(1.02);
+    }
+
     @media (max-width: 520px) {
       .love-message h1 {
         white-space: normal;
@@ -261,9 +307,121 @@
     .hidden {
       display: none !important;
     }
+
+    .gallery-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff9f9;
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #ffe0e0;
+    }
+
+    .gallery-header h1 {
+      color: #d48d8d;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .close-gallery {
+      background: #f2afaf;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .close-gallery:hover {
+      background: #e59595;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 1rem 0;
+    }
+
+    .photo-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #ffe2e2;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(199, 92, 92, 0.12);
+    }
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(135deg, #fff0f0, #ffe6e6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d48d8d;
+      font-size: 3rem;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .photo-caption {
+      padding: 1rem;
+      text-align: center;
+      color: #b27777;
+      font-weight: 500;
+      background: white;
+    }
+
+    .add-photos-note {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #fff5f5;
+      border-radius: 32px;
+      color: #c99191;
+      font-style: italic;
+      border: 1px dashed #f2afaf;
+    }
+
+    .add-photos-note code {
+      background: #ffe0e0;
+      padding: 0.2rem 0.5rem;
+      border-radius: 8px;
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
+
   <div id="authScreen" class="auth-screen">
     <div class="auth-card">
       <h2>✧ ˚₊‧⁺˖ ♡</h2>
@@ -275,12 +433,17 @@
       <div id="authError" class="error-message"></div>
     </div>
   </div>
+
   <div id="wrongScreen" class="wrong-screen hidden">
     <div class="wrong-content">
-      <p>you're at the wrong place :( sorry</p>
-      <button id="tryAgainBtn" class="reset-button">go back</button>
+      <p>you're at the wrong place :(</p>
+      <div class="button-group">
+        <button id="tryAgainBtn" class="reset-button">← try again</button>
+        <button id="wrongGalleryBtn" class="gallery-button">📸 see Manqi & Calvin's photo gallery</button>
+      </div>
     </div>
   </div>
+
   <div id="loveScreen" class="love-screen hidden">
     <div class="bg-hearts">
       <div class="bg-heart heart-left">
@@ -297,6 +460,7 @@
           </path>
         </svg>
       </div>
+
       <div class="bg-heart heart-right">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -315,54 +479,100 @@
     <div class="love-message">
       <h1>I love you &lt;3</h1>
     </div>
+    <div class="love-gallery-btn">
+      <button id="loveGalleryBtn" class="gallery-button">📸 see our photo gallery</button>
+    </div>
+  </div>
+  <div id="galleryPage" class="gallery-page hidden">
+    <div class="gallery-container">
+      <div class="gallery-header">
+        <h1>📷 our photo gallery</h1>
+        <button id="closeGalleryBtn" class="close-gallery">✕ close gallery</button>
+      </div>
+
+      <div class="photo-grid" id="photoGrid">
+        <div class="photo-card">
+          <div class="photo-placeholder">
+            
+          </div>
+        <div class="photo-card">
+          <div class="photo-placeholder">
+            
+          </div>
+        <div class="photo-card">
+          <div class="photo-placeholder">
+            <img src="https://i.ibb.co/G3Qj5MyQ/image.png" alt="image" border="0">
+          </div>
+      </div>
+    </div>
   </div>
 
-  <script>
-
-    const authScreen = document.getElementById('authScreen');
+  <script>    const authScreen = document.getElementById('authScreen');
     const wrongScreen = document.getElementById('wrongScreen');
     const loveScreen = document.getElementById('loveScreen');
+    const galleryPage = document.getElementById('galleryPage');
     const nameInput = document.getElementById('nameInput');
     const submitBtn = document.getElementById('submitBtn');
     const authError = document.getElementById('authError');
     const tryAgainBtn = document.getElementById('tryAgainBtn');
-
+    const wrongGalleryBtn = document.getElementById('wrongGalleryBtn');
+    const loveGalleryBtn = document.getElementById('loveGalleryBtn');
+    const closeGalleryBtn = document.getElementById('closeGalleryBtn');
+    let currentScreen = 'auth';
     function showAuthScreen() {
       authScreen.classList.remove('hidden');
       wrongScreen.classList.add('hidden');
       loveScreen.classList.add('hidden');
+      galleryPage.classList.add('hidden');
+      currentScreen = 'auth';
       authError.innerHTML = '';
       if (nameInput) {
         nameInput.value = '';
         nameInput.focus();
       }
     }
+
     function showWrongScreen() {
       authScreen.classList.add('hidden');
       wrongScreen.classList.remove('hidden');
       loveScreen.classList.add('hidden');
+      galleryPage.classList.add('hidden');
+      currentScreen = 'wrong';
     }
+
     function showLoveScreen() {
       authScreen.classList.add('hidden');
       wrongScreen.classList.add('hidden');
       loveScreen.classList.remove('hidden');
+      galleryPage.classList.add('hidden');
+      currentScreen = 'love';
     }
+
+    function showGallery() {
+      galleryPage.classList.remove('hidden');
+      galleryPage.classList.remove('hidden');
+    }
+
+    function hideGallery() {
+      galleryPage.classList.add('hidden');
+    }
+
     function checkName() {
       const name = nameInput.value.trim();
       
       if (name === "") {
-        authError.innerHTML = "enter something :3";
+        authError.innerHTML = "Fill in something";
         return;
       }
       
-      if (name.toLowerCase() === "calvin") {
+
+      if (name.toLowerCase() === "calvin" || name.toLowerCase() === "manqi") {
         showLoveScreen();
       } else {
         showWrongScreen();
       }
     }
 
-    // Event listeners
     if (submitBtn) {
       submitBtn.addEventListener('click', checkName);
     }
@@ -381,8 +591,30 @@
         showAuthScreen();
       });
     }
-
+    if (wrongGalleryBtn) {
+      wrongGalleryBtn.addEventListener('click', function() {
+        showGallery();
+      });
+    }
+    
+    if (loveGalleryBtn) {
+      loveGalleryBtn.addEventListener('click', function() {
+        showGallery();
+      });
+    }
+    
+    if (closeGalleryBtn) {
+      closeGalleryBtn.addEventListener('click', function() {
+        hideGallery();
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !galleryPage.classList.contains('hidden')) {
+        hideGallery();
+      }
+    });
     showAuthScreen();
+
   </script>
 </body>
 </html>
