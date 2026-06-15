@@ -175,6 +175,24 @@
       background: #e59595;
       transform: scale(0.97);
     }
+    .websites-btn {
+      background: #e8c1c1;
+      border: 1px solid #f5cfcf;
+      padding: 0.6rem 1.4rem;
+      border-radius: 40px;
+      color: #b36262;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .websites-btn:hover {
+      background: #f3d6d6;
+      transform: scale(0.98);
+    }
+
     .love-screen {
       min-height: 100vh;
       width: 100%;
@@ -261,6 +279,10 @@
       margin-top: 2rem;
       position: relative;
       z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
     }
 
     .love-gallery-btn .gallery-button {
@@ -273,6 +295,15 @@
     .love-gallery-btn .gallery-button:hover {
       background: #c75c5c;
       transform: scale(1.02);
+    }
+
+    .love-gallery-btn .websites-btn {
+      background: #ffe3e3;
+      font-size: 0.9rem;
+      color: #b46b6b;
+    }
+    .love-gallery-btn .websites-btn:hover {
+      background: #ffd6d6;
     }
 
     @media (max-width: 520px) {
@@ -418,6 +449,133 @@
       border-radius: 8px;
       font-family: monospace;
     }
+
+    /* NEW WEBSITES PAGE STYLES */
+    .websites-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fffaf7;
+      z-index: 2100;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .websites-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 48px;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+      border: 1px solid #ffe2e2;
+      padding: 2.5rem 2rem;
+    }
+
+    .websites-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #ffe0e0;
+    }
+
+    .websites-header h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #e48989, #c75c6b);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .close-websites {
+      background: #f2afaf;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .close-websites:hover {
+      background: #e59595;
+    }
+    .websites-content {
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .websites-title {
+      font-size: 2.5rem;
+      color: #d48d8d;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .website-link-card {
+      background: #fff9f9;
+      border-radius: 32px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px dashed #f2afaf;
+      transition: all 0.3s ease;
+    }
+
+    .website-link-card:hover {
+      border-color: #e59595;
+      background: #fff5f5;
+    }
+
+    .website-link-card p {
+      color: #b27777;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .main-website-link {
+      display: inline-block;
+      background: #f2afaf;
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px rgba(199, 92, 92, 0.2);
+    }
+
+    .main-website-link:hover {
+      background: #e59595;
+      transform: scale(1.02);
+    }
+
+    .coming-soon {
+      color: #c99191;
+      font-style: italic;
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #fff0f0;
+      border-radius: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .websites-container {
+        padding: 1.5rem;
+      }
+      .websites-title {
+        font-size: 1.8rem;
+      }
+      .main-website-link {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -440,6 +598,7 @@
       <div class="button-group">
         <button id="tryAgainBtn" class="reset-button">← try again</button>
         <button id="wrongGalleryBtn" class="gallery-button">📸 see Manqi & Calvin's photo gallery</button>
+        <button id="wrongWebsitesBtn" class="websites-btn">🌐︎ see all the websites that are born under our love!</button>
       </div>
     </div>
   </div>
@@ -481,8 +640,10 @@
     </div>
     <div class="love-gallery-btn">
       <button id="loveGalleryBtn" class="gallery-button">📸 see our photo gallery</button>
+      <button id="loveWebsitesBtn" class="websites-btn">🌐︎ see all the websites that are born under our love!</button>
     </div>
   </div>
+
   <div id="galleryPage" class="gallery-page hidden">
     <div class="gallery-container">
       <div class="gallery-header">
@@ -493,152 +654,152 @@
       <div class="photo-grid" id="photoGrid">
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/Qj7SFwyZ/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/Qj7SFwyZ/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/W4jcX6Lg/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/W4jcX6Lg/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/G3Qj5MyQ/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/G3Qj5MyQ/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/NdByk6Y0/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/NdByk6Y0/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/gbTvyvC5/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/gbTvyvC5/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/39t1M42j/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/39t1M42j/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/d4y6wvw0/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/d4y6wvw0/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/Jjt76q5s/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/Jjt76q5s/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/hFSTnBF0/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/hFSTnBF0/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/tTpjCz0y/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/tTpjCz0y/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/Vp2Njqx6/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/Vp2Njqx6/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/Fb0fwgv9/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/Fb0fwgv9/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/JRHGph0x/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/JRHGph0x/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/GQyFmh7P/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/GQyFmh7P/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/LzznGtFw/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/LzznGtFw/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/xSsJQgc8/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/xSsJQgc8/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/gZBxvBLz/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/gZBxvBLz/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/0RgF29zT/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/0RgF29zT/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/YTK9hWC4/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/YTK9hWC4/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/xtYMq72Z/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/xtYMq72Z/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/SXhLFBqp/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/SXhLFBqp/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/HphqXhkJ/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/HphqXhkJ/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/PZXB6z29/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/PZXB6z29/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/FqCP8BmZ/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/FqCP8BmZ/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/spbHY6sL/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/spbHY6sL/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/0ykg7xzt/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/0ykg7xzt/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/3y12b3bD/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/3y12b3bD/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/hRzkPLh4/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/hRzkPLh4/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/qYNqNQVK/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/qYNqNQVK/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
           <div class="photo-placeholder">
-            <img src="https://i.ibb.co/6cKkVJQx/image.png" alt="image" border="0">
+            <img src="https://i.ibb.co/6cKkVJQx/image.png" alt="image">
           </div>
         </div>
         <div class="photo-card">
@@ -646,15 +807,37 @@
             more photo coming soon....
           </div>
         </div>
-        
-        
       </div>
+    </div>
+  </div>
 
+  <div id="websitesPage" class="websites-page hidden">
+    <div class="websites-container">
+      <div class="websites-header">
+        <button id="closeWebsitesBtn" class="close-websites">✕ close</button>
+      </div>
+      
+      <div class="websites-content">
+        <div class="websites-title">
+          Reaction time Training 👇
+        </div>
+        <div class="website-link-card">
+          <a href="https://ya0mqzhao.github.io/RT_Training/" target="_blank" class="main-website-link"> Visit </a>
+        </div>
+        
+        <div class="coming-soon">
+          more websites coming soon... 
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <script>    const authScreen = document.getElementById('authScreen');
+  <script>
+    const authScreen = document.getElementById('authScreen');
     const wrongScreen = document.getElementById('wrongScreen');
     const loveScreen = document.getElementById('loveScreen');
     const galleryPage = document.getElementById('galleryPage');
+    const websitesPage = document.getElementById('websitesPage');
     const nameInput = document.getElementById('nameInput');
     const submitBtn = document.getElementById('submitBtn');
     const authError = document.getElementById('authError');
@@ -662,12 +845,18 @@
     const wrongGalleryBtn = document.getElementById('wrongGalleryBtn');
     const loveGalleryBtn = document.getElementById('loveGalleryBtn');
     const closeGalleryBtn = document.getElementById('closeGalleryBtn');
+    const wrongWebsitesBtn = document.getElementById('wrongWebsitesBtn');
+    const loveWebsitesBtn = document.getElementById('loveWebsitesBtn');
+    const closeWebsitesBtn = document.getElementById('closeWebsitesBtn');
+    
     let currentScreen = 'auth';
+    
     function showAuthScreen() {
       authScreen.classList.remove('hidden');
       wrongScreen.classList.add('hidden');
       loveScreen.classList.add('hidden');
       galleryPage.classList.add('hidden');
+      websitesPage.classList.add('hidden');
       currentScreen = 'auth';
       authError.innerHTML = '';
       if (nameInput) {
@@ -681,6 +870,7 @@
       wrongScreen.classList.remove('hidden');
       loveScreen.classList.add('hidden');
       galleryPage.classList.add('hidden');
+      websitesPage.classList.add('hidden');
       currentScreen = 'wrong';
     }
 
@@ -689,16 +879,26 @@
       wrongScreen.classList.add('hidden');
       loveScreen.classList.remove('hidden');
       galleryPage.classList.add('hidden');
+      websitesPage.classList.add('hidden');
       currentScreen = 'love';
     }
 
     function showGallery() {
       galleryPage.classList.remove('hidden');
-      galleryPage.classList.remove('hidden');
+      websitesPage.classList.add('hidden');
     }
 
     function hideGallery() {
       galleryPage.classList.add('hidden');
+    }
+    
+    function showWebsitesPage() {
+      websitesPage.classList.remove('hidden');
+      galleryPage.classList.add('hidden');
+    }
+    
+    function hideWebsitesPage() {
+      websitesPage.classList.add('hidden');
     }
 
     function checkName() {
@@ -709,7 +909,6 @@
         return;
       }
       
-
       if (name.toLowerCase() === "calvin" || name.toLowerCase() === "manqi") {
         showLoveScreen();
       } else {
@@ -752,13 +951,38 @@
         hideGallery();
       });
     }
+    
+    // New websites page event listeners
+    if (wrongWebsitesBtn) {
+      wrongWebsitesBtn.addEventListener('click', function() {
+        showWebsitesPage();
+      });
+    }
+    
+    if (loveWebsitesBtn) {
+      loveWebsitesBtn.addEventListener('click', function() {
+        showWebsitesPage();
+      });
+    }
+    
+    if (closeWebsitesBtn) {
+      closeWebsitesBtn.addEventListener('click', function() {
+        hideWebsitesPage();
+      });
+    }
+    
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && !galleryPage.classList.contains('hidden')) {
-        hideGallery();
+      if (e.key === 'Escape') {
+        if (!galleryPage.classList.contains('hidden')) {
+          hideGallery();
+        }
+        if (!websitesPage.classList.contains('hidden')) {
+          hideWebsitesPage();
+        }
       }
     });
+    
     showAuthScreen();
-
   </script>
 </body>
 </html>
